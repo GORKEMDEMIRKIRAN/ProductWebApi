@@ -25,15 +25,19 @@ const {seedProducts,seedUsers,seedTokens}=require('./src/data/seed');
 // Initialize express app
 const app=express();
 
+// CORS Preflight isteklerini ele almak için OPTIONS isteklerini işle
+app.options('*',cors());
 
 
-//Middleware
+// MIDDLEWARE
+// CORS middleware'ini daha detaylı yapılandırma
 app.use(cors({
-    origin: '*', // Tüm domainlere izin ver (geliştirme için)
-    // Veya belirli domainlere izin ver:
-    // origin: ['https://yourfrontend.com', 'https://www.yourapp.com'],
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization']
+    origin: '*',
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept', 'Origin'],
+    credentials: true,
+    preflightContinue: false,
+    optionsSuccessStatus: 204
   }));
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
