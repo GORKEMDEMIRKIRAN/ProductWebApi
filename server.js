@@ -25,9 +25,6 @@ const {seedProducts,seedUsers,seedTokens}=require('./src/data/seed');
 // Initialize express app
 const app=express();
 
-// CORS Preflight isteklerini ele almak için OPTIONS isteklerini işle
-app.options('*',cors());
-
 
 // MIDDLEWARE
 // CORS middleware'ini daha detaylı yapılandırma
