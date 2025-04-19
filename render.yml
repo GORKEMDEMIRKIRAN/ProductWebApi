@@ -1,0 +1,21 @@
+
+
+services:
+  # Web service
+  - type: web
+    name: product-web-api
+    env: docker
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    plan: free # veya ihtiyacınıza göre başka bir plan
+    numInstances: 1
+    healthCheckPath: /api/health # API'nizin sağlık kontrolü için bir endpoint
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 3000
+    disk:
+      name: logs
+      mountPath: /usr/src/app/logs
+      sizeGB: 1
