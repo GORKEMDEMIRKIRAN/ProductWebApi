@@ -46,27 +46,6 @@ const app=express();
 
 
 
-
-
-
-// CORS Preflight isteklerini ele almak için OPTIONS isteklerini işle
-app.options('*', cors());
-
-// CORS için manuel başlıklar ekle - en üst seviyede
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
-  res.header('Access-Control-Allow-Credentials', 'true');
-  
-  // OPTIONS isteklerini hemen yanıtla
-  if (req.method === 'OPTIONS') {
-    return res.status(200).end();
-  }
-  
-  next();
-});
-
 // CORS middleware'i
 app.use(cors({
   origin: '*',
@@ -77,36 +56,9 @@ app.use(cors({
   optionsSuccessStatus: 204
 }));
 
-// HTTPS yönlendirmesi (Render.com için)
-app.use((req, res, next) => {
-  if (process.env.NODE_ENV === 'production' && req.header('x-forwarded-proto') !== 'https') {
-    res.redirect(`https://${req.header('host')}${req.url}`);
-  } else {
-    next();
-  }
-});
-
 // JSON ve URL-encoded middleware
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
-
-// CORS test endpoint'i
-app.get('/api/cors-test', (req, res) => {
-  res.json({ 
-    message: 'CORS test successful', 
-    timestamp: new Date().toISOString(),
-    environment: process.env.NODE_ENV || 'development',
-    headers: req.headers
-  });
-});
-
-// Health check endpoint
-app.get('/api/health', (req, res) => {
-  res.status(200).json({ status: 'OK', timestamp: new Date().toISOString() });
-});
-
-
-
 
 
 
