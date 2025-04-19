@@ -10,7 +10,7 @@ WORKDIR /usr/src/app
 COPY package*.json ./
 
 # Bağımlılıkları yükle
-RUN npm ci --only=development
+RUN npm ci --only=production
 
 # Uygulamanın geri kalanını kopyala
 COPY . .
@@ -19,7 +19,7 @@ COPY . .
 RUN mkdir -p logs
 
 # Ortam değişkenlerini ayarla
-ENV NODE_ENV=development
+ENV NODE_ENV=production
 
 # Uygulamanın çalıştığı portu aç
 EXPOSE 3000
