@@ -25,8 +25,16 @@ const {seedProducts,seedUsers,seedTokens}=require('./src/data/seed');
 // Initialize express app
 const app=express();
 
+
+
 //Middleware
-app.use(cors());
+app.use(cors({
+    origin: '*', // Tüm domainlere izin ver (geliştirme için)
+    // Veya belirli domainlere izin ver:
+    // origin: ['https://yourfrontend.com', 'https://www.yourapp.com'],
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+  }));
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 
